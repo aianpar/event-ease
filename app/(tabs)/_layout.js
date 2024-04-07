@@ -1,18 +1,19 @@
 import { Tabs } from "expo-router";
 import { Feather } from "@expo/vector-icons";
 import { View } from "react-native";
+import { StyleSheet } from "react-native";
 
 export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "#E6E6E6",
-        tabBarInactiveTintColor: "grey",
+        tabBarActiveTintColor: "#343434",
+        tabBarInactiveTintColor: "#EDEDED",
         tabBarStyle: {
           backgroundColor: "#181818",
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
-          paddingTop: 20,
+          height: 100,
         },
         tabBarLabelStyle: {
           display: "none",
@@ -25,7 +26,7 @@ export default function TabsLayout() {
           headerShown: false,
           title: "Home",
           tabBarIcon: ({ color, focused }) => (
-            <View>
+            <View style={focused ? styles.activeTab : {}}>
               <Feather name="home" size={24} color={color} />
             </View>
           ),
@@ -36,8 +37,10 @@ export default function TabsLayout() {
         options={{
           headerShown: false,
           title: "Discover",
-          tabBarIcon: ({ color }) => (
-            <Feather name="search" size={24} color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <View style={focused ? styles.activeTab : {}}>
+              <Feather name="search" size={24} color={color} />
+            </View>
           ),
         }}
       ></Tabs.Screen>
@@ -46,8 +49,10 @@ export default function TabsLayout() {
         options={{
           headerShown: false,
           title: "Events",
-          tabBarIcon: ({ color }) => (
-            <Feather name="file" size={24} color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <View style={focused ? styles.activeTab : {}}>
+              <Feather name="file" size={24} color={color} />
+            </View>
           ),
         }}
       ></Tabs.Screen>
@@ -56,11 +61,24 @@ export default function TabsLayout() {
         options={{
           headerShown: false,
           title: "Profile",
-          tabBarIcon: ({ color }) => (
-            <Feather name="user" size={24} color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <View style={focused ? styles.activeTab : {}}>
+              <Feather name="user" size={24} color={color} />
+            </View>
           ),
         }}
       ></Tabs.Screen>
     </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  activeTab: {
+    display: "flex",
+    alignItems: "center",
+    backgroundColor: "#E6E6E6",
+    borderRadius: 50,
+    width: 70,
+    padding: 10,
+  },
+});
