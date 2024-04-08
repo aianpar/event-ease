@@ -35,7 +35,6 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="DiscoverPage"
         options={{
-          headerShown: false,
           title: "Discover",
           tabBarIcon: ({ color, focused }) => (
             <View style={focused ? styles.activeTab : {}}>
