@@ -33,7 +33,7 @@ export default function TabsLayout() {
         }}
       ></Tabs.Screen>
       <Tabs.Screen
-        name="DiscoverPage/DiscoverPage"
+        name="DiscoverPage"
         options={{
           headerShown: false,
           title: "Discover",
@@ -45,7 +45,7 @@ export default function TabsLayout() {
         }}
       ></Tabs.Screen>
       <Tabs.Screen
-        name="EventsPage/EventsPage"
+        name="EventsPage"
         options={{
           headerShown: false,
           title: "Events",
@@ -57,7 +57,7 @@ export default function TabsLayout() {
         }}
       ></Tabs.Screen>
       <Tabs.Screen
-        name="ProfilePage/ProfilePage"
+        name="ProfilePage"
         options={{
           headerShown: false,
           title: "Profile",

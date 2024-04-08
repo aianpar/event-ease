@@ -7,6 +7,10 @@ export default function RootLayout(){
             options={{
                 headerShown: false,
             }}/>
+            <Stack.Screen name="(modals)/Filter" options={{
+                presentation: 'modal',
+                headerShown: false
+            }}/>
         </Stack>
     )
 }

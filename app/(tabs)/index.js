@@ -1,10 +1,13 @@
 import { StyleSheet, Text, View } from "react-native";
+import { Link } from 'expo-router';
 
 export default function Page() {
   return (
     <View style={styles.container}>
       <View style={styles.main}>
         <Text style={styles.title}>Home Page</Text>
+        <Link href={'(modals)/Filter'}>Filter</Link>
+        <Link href={'/events/12'}>Link</Link>
       </View>
     </View>
   );
