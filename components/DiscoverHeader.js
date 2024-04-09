@@ -6,33 +6,33 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
+import { useAssets } from "expo-asset";
 import { AntDesign } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 
-const discoverBg = require('../assets/bg-image/discoverbg.png');
-
+const image = require("../assets/bg-image/discoverbg.png");
 
 export default function DiscoverHeader() {
   return (
-      <View style={styles.container}>
-        <View style={styles.actionRow}>
-          <View style={styles.actionRow__TextWrap}>
-            <Text style={styles.actionRow__Title}>Discover</Text>
-            <View>
-              <Text style={styles.actionRow__Location}>Toronto,ON</Text>
-            </View>
-          </View>
-          <View style={styles.actionRow__BtnWrap}>
-            <TouchableOpacity style={styles.actionRow__Filter}>
-              <AntDesign name="filter" size={24} color="#FDFDFD" />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.actionRow__Search}>
-              <AntDesign name="search1" size={24} color="#FDFDFD" />
-            </TouchableOpacity>
+    <View style={styles.container}>
+      <View style={styles.actionRow}>
+        <View style={styles.actionRow__TextWrap}>
+          <Text style={styles.actionRow__Title}>Discover</Text>
+          <View>
+            <Text style={styles.actionRow__Location}>Toronto,ON</Text>
           </View>
         </View>
-        <View style={styles.eclipseDec}></View>
+        <View style={styles.actionRow__BtnWrap}>
+          <TouchableOpacity style={styles.actionRow__Filter}>
+            <AntDesign name="filter" size={24} color="#FDFDFD" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.actionRow__Search}>
+            <AntDesign name="search1" size={24} color="#FDFDFD" />
+          </TouchableOpacity>
+        </View>
       </View>
+      <Image source={image} style={styles.eclipseBg}></Image>
+    </View>
   );
 }
 
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     paddingRight: 12,
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
   },
   actionRow__BtnWrap: {
     flexDirection: "row",
@@ -56,19 +56,25 @@ const styles = StyleSheet.create({
   actionRow__Title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#FDFDFD"
+    color: "#FDFDFD",
   },
-  actionRow__Location:{
+  actionRow__Location: {
     fontSize: 11,
     fontWeight: "bold",
-    color: "#C0C0C0"
+    color: "#C0C0C0",
   },
-  actionRow__Filter:{
+  actionRow__Filter: {
     padding: 8,
   },
-    actionRow__Search:{
+  actionRow__Search: {
     backgroundColor: "#0C0C0C",
     borderRadius: 10,
     padding: 8,
   },
+  eclipseBg:{
+    position:"relative",
+    zIndex:"-1",
+    top: -200, 
+    left: -100,
+  }
 });

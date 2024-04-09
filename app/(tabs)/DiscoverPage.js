@@ -5,11 +5,11 @@ import DiscoverHeader from "../../components/DiscoverHeader";
 
 export default function DiscoverPage() {
   return (
-    <View>
+    <View style={styles.container}>
       <Stack.Screen options={{
         header: () => {return <DiscoverHeader/>}
       }}/>
-      <View >
+      <View>
         <Text>Discover Page</Text>
       </View>
     </View>
@@ -17,5 +17,8 @@ export default function DiscoverPage() {
 }
 
 const styles = StyleSheet.create({
-
+  container:{
+    flex: 1,
+    backgroundColor: "#282828"
+  }
 });
