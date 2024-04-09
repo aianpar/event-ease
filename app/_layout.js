@@ -6,10 +6,16 @@ export default function RootLayout(){
             <Stack.Screen name="(tabs)" 
             options={{
                 headerShown: false,
+                presentation: 'card',
             }}/>
             <Stack.Screen name="(modals)/Filter" options={{
                 presentation: 'modal',
                 headerShown: false
+            }}/>
+             <Stack.Screen name="(modals)/Events/[id]" options={{
+                presentation: 'modal',
+                headerShown: true,
+                title: "event",
             }}/>
         </Stack>
     )
