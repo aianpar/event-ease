@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   eclipseBg:{
     position:"relative",
-    zIndex:"-1",
+    zIndex: -1,
     top: -200, 
     left: -100,
   }

@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     padding: 24,
+    backgroundColor: "#282828"
   },
   main: {
     flex: 1,
@@ -28,6 +29,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 64,
     fontWeight: "bold",
+    color:"white",
   },
   subtitle: {
     fontSize: 36,
