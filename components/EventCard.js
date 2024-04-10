@@ -3,6 +3,9 @@ import { router } from "expo-router";
 import { StyleSheet } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
+
+const cardStyle = require("../assets/bg-image/cardstyle.png")
 
 
 const imageTest = require("../assets/testAsset/uifaces-popular-image.jpg");
@@ -17,6 +20,9 @@ export default function EventCard() {
 
   return (
       <Pressable onPress={handlePress} style={styles.container}>
+        <View style={styles.cardStyle__wrap}>
+        <Image source={cardStyle} style={styles.cardStyle}/>
+        </View>
         <View style={styles.cardWrapper}>
           <View style={styles.cardHeader}>
             <View style={styles.cardHeader__user}>
@@ -27,7 +33,7 @@ export default function EventCard() {
               </View>
             </View>
             <TouchableOpacity style={styles.button}>
-                <AntDesign name="hearto" size={18} color="#FDFDFD" />
+                <Entypo name="plus" size={18} color="#FDFDFD" />
               <Text style={styles.buttonText}>Join</Text>
             </TouchableOpacity>
           </View>
@@ -55,16 +61,27 @@ export default function EventCard() {
 const styles = StyleSheet.create({
   container: {
     width:'100%',
-    height: 324,
+    height: 370,
     backgroundColor: "#3B3B3B",
     borderRadius: 10,
   },
+  cardStyle__wrap:{
+    left: "50%",
+    right: "50%",
+    position: "absolute",
+    alignItems:"center",
+  },
+  cardStyle: {
+    height:25,
+    width:125,
+  }, 
   cardWrapper: {
     flex: 1,
     paddingTop: 8,
     paddingHorizontal:16,
   },
   cardHeader: {
+    marginTop:8,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -74,22 +91,25 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 50,
+    marginBottom: 4,
   },
   cardHeader__user: {
-    flexDirection: "row",
+    flexDirection: "column",
   },
   button: {
     flexDirection:"row",
     gap: 4,
     width: 100,
     height: 40,
-    backgroundColor: "#1D1D1D",
+    backgroundColor: "#00BB4B",
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
+    marginBottom: 15,
   },
   buttonText: {
-    color: "#FDFDFD"
+    color: "#FDFDFD",
+    fontWeight: "700",
   },
   cardDetails: {
     paddingTop: 8,
@@ -105,7 +125,6 @@ const styles = StyleSheet.create({
   },
   cardHeader__textWrap:{
     justifyContent: "center",
-    paddingLeft: 8
   },
   cardHeader__subhead:{
     color: "#BEBEBE",

@@ -91,7 +91,6 @@ const styles = StyleSheet.create({
     color: "white",
   },
   header: {
-    paddingTop: 8,
     fontSize: 24,
     fontWeight: "bold",
     color: "#FDFDFD",
