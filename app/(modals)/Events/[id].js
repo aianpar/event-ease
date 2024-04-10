@@ -7,12 +7,13 @@ import {
   ScrollView,
 } from "react-native";
 import { useLocalSearchParams } from "expo-router";
+import { useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import MapView from "react-native-maps";
+import MapView, {Marker} from "react-native-maps";
 
 import { router } from "expo-router";
 
@@ -21,6 +22,13 @@ function handleBack() {
   router.back();
 }
 export default function Event() {
+  const [mapRegion, setmapRegion] = useState({
+    latitude: 37.78825,
+    longitude: -122.4324,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  });
+
   const { id } = useLocalSearchParams();
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -75,7 +83,9 @@ export default function Event() {
               </Text>
             </View>
             <View style={styles.infoBox__locationMapWrap}>
-              <MapView style={styles.map}></MapView>
+              <MapView style={styles.map} region={mapRegion} scrollEnabled={false} zoomEnabled={false}>
+                <Marker coordinate={mapRegion} title='Marker'></Marker>
+              </MapView>
             </View>
           </View>
         </View>
