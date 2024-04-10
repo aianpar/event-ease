@@ -1,10 +1,18 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
-// import MapView from "react-native-maps";
+import { Ionicons } from "@expo/vector-icons";
+import MapView from "react-native-maps";
 
 import { router } from "expo-router";
 
@@ -15,7 +23,7 @@ function handleBack() {
 export default function Event() {
   const { id } = useLocalSearchParams();
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
         <Image
           style={styles.header__image}
@@ -28,7 +36,7 @@ export default function Event() {
         <View style={styles.header__wrap}>
           <View style={styles.header__textWrap}>
             <Text style={styles.header__headline}>Lisa's Birthday</Text>
-            <Text style={styles.header__date}>20 April 2023 at 6:30pm</Text>
+            <Text style={styles.header__date}>21 April 2023 at 6:30pm</Text>
           </View>
           <View style={styles.header__hostWrap}>
             <Image
@@ -55,16 +63,53 @@ export default function Event() {
             <Feather name="calendar" size={24} color="#FDFDFD" />
             <View>
               <Text style={styles.dateWrap__dayofweek}>Saturday</Text>
-                <Text style={styles.dateWrap__text}>20 April 2023</Text>
-                <Text style={styles.dateWrap__text}>6:30pm - 9pm</Text>
+              <Text style={styles.dateWrap__text}>21 April 2023</Text>
+              <Text style={styles.dateWrap__text}>6:30pm - 9pm</Text>
             </View>
           </View>
-          {/* <View style={styles.infoBox__locationMap}>
+          <View style={styles.infoBox__locationMap}>
+            <View style={styles.infoBox__locationMapTextWrap}>
+              <Ionicons name="location-outline" size={28} color="#FDFDFD" />
+              <Text style={styles.infoBox__locationMapText}>
+                144 Front St W, Toronto,{"\n"}ON M5J 2L7
+              </Text>
+            </View>
+            <View style={styles.infoBox__locationMapWrap}>
               <MapView style={styles.map}></MapView>
-          </View> */}
+            </View>
+          </View>
+        </View>
+        <View style={styles.aboutEvent}>
+          <Text style={styles.aboutEvent__header}>About</Text>
+          <Text style={styles.aboutEvent__text}>
+            We are having a birthday party for Lisa this Saturday. The address
+            is 144 Front St W, come anytime after 7:00, BYOB, Potluck. If you
+            want to help us with the party DM me in the chat. Hope to see you
+            then!!!
+          </Text>
+        </View>
+        <View style={styles.hostPage}>
+          <Image
+            style={styles.hostPage__avatar}
+            source={require("../../../assets/testAsset/uifaces-popular-image.jpg")}
+          ></Image>
+          <View style={styles.hostPage__textWrap}>
+            <Text style={styles.hostPage__name}>Kyle</Text>
+            <Text style={styles.hostPage__userTag}>@kyle3000</Text>
+            <Text style={styles.hostPage__description}>
+              Explorer with a penchant for life's surprises.
+            </Text>
+          </View>
+          <TouchableOpacity style={styles.hostPage__btnAction}>
+            <Text style={styles.hostPage__btnActionText}>Follow</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.attendeesBox}>
+          <Ionicons name="people-outline" size={24} color="#FDFDFD" />
+          <Text style={styles.attendeesBox__text}>20+ are going to attend this event</Text>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -162,17 +207,97 @@ const styles = StyleSheet.create({
     borderBottomColor: "#FDFDFD",
     paddingBottom: 20,
   },
-  dateWrap__dayofweek:{
+  dateWrap__dayofweek: {
     color: "white",
   },
-  dateWrap__text:{
-    color:"#CDCDCD"
+  dateWrap__text: {
+    color: "#CDCDCD",
   },
-  infoBox__locationMap:{
+  infoBox__locationMap: {
     flex: 1,
   },
-  map:{
+  infoBox__locationMapWrap: {
+    flex: 1,
+  },
+  map: {
     width: "100%",
     height: "100%",
+  },
+  infoBox__locationMapTextWrap: {
+    paddingVertical: 16,
+    flexDirection: "row",
+    gap: 12,
+  },
+  infoBox__locationMapText: {
+    color: "#CBCBCB",
+  },
+  aboutEvent: {
+    paddingHorizontal: 8,
+  },
+  aboutEvent__header: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#FDFDFD",
+    paddingVertical: 16,
+  },
+  aboutEvent__text: {
+    color: "#FDFDFD",
+    marginBottom: 16,
+  },
+  hostPage: {
+    backgroundColor: "rgba(13,13,13,0.5)",
+    borderRadius: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 32,
+    gap: 16,
+    marginBottom: 10
+  },
+  hostPage__avatar: {
+    width: 70,
+    height: 70,
+    borderRadius: 50,
+  },
+  hostPage__textWrap: {
+    flex: 2,
+  },
+  hostPage__btnAction: {
+    flex: 1,
+  },
+  hostPage__name: {
+    color: "#FDFDFD",
+    fontSize: 18,
+  },
+  hostPage__userTag: {
+    color: "#CBCBCB",
+  },
+  hostPage__description: {
+    color: "#FDFDFD",
+    flexWrap: "wrap",
+  },
+  hostPage__btnAction: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: "auto",
+    width: 80,
+    height: 30,
+    borderColor: "white",
+    borderWidth: 1,
+    borderRadius: 20,
+  },
+  hostPage__btnActionText: {
+    color: "white",
+  },
+  attendeesBox:{
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "rgba(13,13,13,0.5)",
+    padding: 32,
+    borderRadius: 20,
+    gap: 10,
+    marginBottom: 40
+  },
+  attendeesBox__text:{
+    color: "#FDFDFD",
   }
 });
