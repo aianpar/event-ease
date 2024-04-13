@@ -1,9 +1,21 @@
-import { Stack } from "expo-router";
-import { Text, View, ScrollView, Image, TouchableOpacity } from "react-native";
+import { Link, Stack } from "expo-router";
+import {
+  Text,
+  View,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
 import { StyleSheet } from "react-native";
 import DiscoverHeader from "../../components/DiscoverHeader";
-import EventCard from "../../components/EventCard"
-import todayIcon from "../../assets/icons/category/today.png";
+import EventCard from "../../components/EventCard";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Entypo } from "@expo/vector-icons";
+import ButtonRedirect from "../../components/ButtonRedirect";
+
+const { width } = Dimensions.get("window");
 
 const categories = [
   {
@@ -29,6 +41,14 @@ const categories = [
 ];
 
 export default function DiscoverPage() {
+  const [eventCard, setEventCard] = useState([]);
+  useEffect(() => {
+    axios.get("http://localhost:8080/events").then((r) => {
+      const data = r.data;
+      setEventCard(data);
+    });
+  }, []);
+
   return (
     <View style={styles.container}>
       <Stack.Screen
@@ -38,7 +58,10 @@ export default function DiscoverPage() {
           },
         }}
       />
-      <ScrollView contentContainerStyle={{ paddingHorizontal: 12 ,gap: 16}} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        contentContainerStyle={{ paddingHorizontal: 12, gap: 16 }}
+        showsVerticalScrollIndicator={false}
+      >
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -60,11 +83,23 @@ export default function DiscoverPage() {
           ))}
         </ScrollView>
         <Text style={styles.header}>Around You</Text>
-
-        <EventCard/>
-        <EventCard/>
-
+        {eventCard.map((item, i) => {
+          return (
+            <EventCard
+              key={i}
+              event_name={item.event_name}
+              permission={item.permission}
+              address={item.address}
+              id={item.id}
+              name={item.name}
+              avatar={item.avatar}
+              date={item.timestamp_start}
+              path={item.eventimage_path}
+            ></EventCard>
+          );
+        })}
       </ScrollView>
+      <ButtonRedirect></ButtonRedirect>
     </View>
   );
 }
@@ -72,7 +107,7 @@ export default function DiscoverPage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#282828",
+    backgroundColor: "#151515",
   },
   categories: {
     flex: 1,
@@ -81,8 +116,8 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
   },
   categories__image: {
-    width: 80,
-    height: 80,
+    width: width * 0.2,
+    height: width * 0.2,
   },
   categories__text: {
     paddingTop: 6,

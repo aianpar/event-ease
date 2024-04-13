@@ -1,91 +1,103 @@
 import { View, TouchableOpacity, Text, Pressable, Image } from "react-native";
 import { router } from "expo-router";
 import { StyleSheet } from "react-native";
-import { AntDesign } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 
-const cardStyle = require("../assets/bg-image/cardstyle.png")
+const cardStyle = require("../assets/bg-image/cardstyle.png");
 
 
-const imageTest = require("../assets/testAsset/uifaces-popular-image.jpg");
-const imageEvent = require("../assets/testAsset/1.png")
+export default function EventCard({ event_name, address, permission, date , id ,name , avatar, path}) {
+  function handlePress() {
+    router.navigate(`(modals)/Events/${id}`);
+  }
+//Time Converter
+  const convDate = new Date(date * 1000)
 
-export default function EventCard() {
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
 
-    function handlePress(){
-        router.navigate("(modals)/Events/2");
-    };
+  let timeHrs = convDate.getHours();
+  let timeMin = convDate.getMinutes();
 
+  const amPM = timeHrs >= 12 ? 'PM' : 'AM';
+  timeHrs = timeHrs % 12;
+  timeHrs = timeHrs ? timeHrs : 12;
+
+  function doubleDigit(num){
+    return num < 10 ? '0' + `${num}` : num;
+  }
+//***** */
 
   return (
-      <Pressable onPress={handlePress} style={styles.container}>
-        <View style={styles.cardStyle__wrap}>
-        <Image source={cardStyle} style={styles.cardStyle}/>
-        </View>
-        <View style={styles.cardWrapper}>
-          <View style={styles.cardHeader}>
-            <View style={styles.cardHeader__user}>
-              <Image source={imageTest} style={styles.cardHeader__image}></Image>
-              <View style={styles.cardHeader__textWrap}>
-                <Text style={styles.cardHeader__subhead}>From your Contacts</Text>
-                <Text style={styles.cardHeader__header}>Kyle</Text>
-              </View>
+    <Pressable onPress={handlePress} style={styles.container}>
+      <View style={styles.cardStyle__wrap}>
+        <Image source={cardStyle} style={styles.cardStyle} />
+      </View>
+      <View style={styles.cardWrapper}>
+        <View style={styles.cardHeader}>
+          <View style={styles.cardHeader__user}>
+            <Image source={{uri:`http://localhost:8080/userImg/${avatar}`}} style={styles.cardHeader__image}></Image>
+            <View style={styles.cardHeader__textWrap}>
+              <Text style={styles.cardHeader__subhead}>From your Contacts</Text>
+              <Text style={styles.cardHeader__header}>{name}</Text>
             </View>
-            <TouchableOpacity style={styles.button}>
-                <Entypo name="plus" size={18} color="#FDFDFD" />
-              <Text style={styles.buttonText}>Join</Text>
-            </TouchableOpacity>
           </View>
-          <View style={styles.cardDetails}>
-            <View>
-              <Text style={styles.cardDetails__type}>Private Event</Text>
-              <Text style={styles.cardDetails__name}>Lisa's Birthday</Text>
-              <View style={styles.cardDetails__locationWrap}>
+          <TouchableOpacity style={styles.button}>
+            <Entypo name="plus" size={18} color="#FDFDFD" />
+            <Text style={styles.buttonText}>Join</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.cardDetails}>
+          <View>
+            <Text style={styles.cardDetails__type}>{permission} Event</Text>
+            <Text style={styles.cardDetails__name}>{event_name}</Text>
+            <View style={styles.cardDetails__locationWrap}>
               <Ionicons name="location-outline" size={24} color="#BEBEBE" />
-                <Text style={styles.cardDetails__location}>144 Front St W, Toronto,{"\n"}ON M5J 2L7</Text>
-              </View>
-            </View>
-            <View style={{ alignItems: "flex-end" }}>
-              <Text style={styles.cardDetails__date}>21</Text>
-              <Text style={styles.cardDetails__month}>february</Text>
-              <Text style={styles.cardDetails__time}>6:30 pm</Text>
+              <Text style={styles.cardDetails__location}>{address}</Text>
             </View>
           </View>
+          <View style={{ alignItems: "flex-end"}}>
+            <Text style={styles.cardDetails__date}>{convDate.getDate()}</Text>
+            <Text style={styles.cardDetails__month}>{monthNames[convDate.getMonth()]}</Text>
+            <Text style={styles.cardDetails__time}>{`${timeHrs}:${doubleDigit(timeMin)} ${amPM}`}</Text>
+          </View>
         </View>
-        <Image style={styles.cardPreview} source={imageEvent}/>
-      </Pressable>
+      </View>
+      <Image style={styles.cardPreview} source={{uri:`http://localhost:8080/eventImg/${path}`}}/>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    width:'100%',
+    width: "100%",
     height: 370,
     backgroundColor: "#3B3B3B",
     borderRadius: 10,
   },
-  cardStyle__wrap:{
+  cardStyle__wrap: {
     left: "50%",
     right: "50%",
     position: "absolute",
-    alignItems:"center",
+    alignItems: "center",
   },
   cardStyle: {
-    height:25,
-    width:125,
-  }, 
+    height: 25,
+    width: 125,
+  },
   cardWrapper: {
     flex: 1,
     paddingTop: 8,
-    paddingHorizontal:16,
+    paddingHorizontal: 16,
   },
   cardHeader: {
-    marginTop:8,
+    marginTop: 8,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-
   },
   cardHeader__image: {
     width: 50,
@@ -97,7 +109,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
   button: {
-    flexDirection:"row",
+    flexDirection: "row",
     gap: 4,
     width: 100,
     height: 40,
@@ -115,55 +127,60 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "flex-start",
+    alignItems: "flex-end",
   },
   cardPreview: {
     resizeMode: "cover",
-    width:"100%",
+    height: 140,
+    width: "100%",
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
   },
-  cardHeader__textWrap:{
+  cardHeader__textWrap: {
     justifyContent: "center",
   },
-  cardHeader__subhead:{
+  cardHeader__subhead: {
     color: "#BEBEBE",
-    fontSize: 12
+    fontSize: 12,
   },
-  cardHeader__header:{
+  cardHeader__header: {
     color: "#FDFDFD",
   },
-  cardDetails__locationWrap:{
-    flexDirection:"row",
-    alignItems:"center",
+  cardDetails__locationWrap: {
+    flexDirection: "row",
+    alignItems: "center",
   },
-  cardDetails__type:{
+  cardDetails__type: {
     color: "#BEBEBE",
     fontSize: 14,
   },
-  cardDetails__name:{
+  cardDetails__name: {
+    width: 200,
+    flexWrap: "wrap",
     color: "#FDFDFD",
     fontSize: 24,
     fontWeight: "bold",
     paddingVertical: 4,
   },
-  cardDetails__location:{
+  cardDetails__location: {
+    width: 200,
+    flexWrap: "wrap",
     color: "#BEBEBE",
     fontSize: 14,
   },
-  cardDetails__date:{
+  cardDetails__date: {
     color: "#FDFDFD",
     fontWeight: "bold",
     fontSize: 40,
   },
-  cardDetails__month:{
+  cardDetails__month: {
     color: "#FDFDFD",
     fontWeight: "bold",
     fontSize: 20,
     marginTop: -5,
   },
-  cardDetails__time:{
+  cardDetails__time: {
     color: "#FDFDFD",
     fontSize: 16,
-  }
+  },
 });

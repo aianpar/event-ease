@@ -39,7 +39,7 @@ export default function DiscoverHeader() {
 const styles = StyleSheet.create({
   container: {
     height: 130,
-    backgroundColor: "#282828",
+    backgroundColor: "#151515",
   },
   actionRow: {
     paddingTop: 60,

@@ -1,14 +1,18 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View , Image } from "react-native";
 import { Link } from 'expo-router';
+import ButtonRedirect from "../../components/ButtonRedirect";
 
 export default function Page() {
   return (
     <View style={styles.container}>
-      <View style={styles.main}>
-        <Text style={styles.title}>Home Page</Text>
-        <Link href={'(modals)/Filter'}>Filter</Link>
-        <Link href={'/events/12'}>Link</Link>
+      <View style={styles.header}>
+        <Text style={styles.title}>Welcome</Text>
+        <Image source={require("../../assets/bg-image/homebg.png")} style={styles.eclipseBg}/>
       </View>
+
+      <Link href={'(modals)/Filter'}>Filter</Link>
+      <Link href={'/events/12'}>Link</Link>
+      <ButtonRedirect></ButtonRedirect>
     </View>
   );
 }
@@ -16,23 +20,24 @@ export default function Page() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    padding: 24,
-    backgroundColor: "#282828"
+    paddingHorizontal: 12,
+    backgroundColor: "#151515"
   },
-  main: {
+  header: {
     flex: 1,
-    justifyContent: "center",
-    maxWidth: 960,
-    marginHorizontal: "auto",
+    height: 130,
   },
   title: {
-    fontSize: 64,
+    fontSize: 24,
     fontWeight: "bold",
     color:"white",
+    paddingTop: 60,
   },
-  subtitle: {
-    fontSize: 36,
-    color: "#38434D",
-  },
+  eclipseBg:{
+    position:"absolute",
+    zIndex: -1,
+    top: -90, 
+    left: -100,
+  }
+
 });

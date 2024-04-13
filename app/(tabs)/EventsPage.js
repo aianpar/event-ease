@@ -1,11 +1,13 @@
 import { Text, View } from "react-native"
 import { StyleSheet } from "react-native";
+import EventCard from "../../components/EventCard";
 
 export default function EventsPage(){
     return (
         <View style={styles.container}>
         <View style={styles.main}>
-          <Text style={styles.title}>Events Page</Text>
+          <Text style={styles.title}>Your Events</Text>
+          <EventCard></EventCard>
         </View>
       </View>
     );
@@ -15,22 +17,18 @@ export default function EventsPage(){
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      alignItems: "center",
-      padding: 24,
+      paddingHorizontal: 12,
+      backgroundColor: "#151515"
     },
-    main: {
+    header: {
       flex: 1,
-      justifyContent: "center",
-      maxWidth: 960,
-      marginHorizontal: "auto",
+      height: 130,
     },
     title: {
-      fontSize: 64,
+      fontSize: 24,
       fontWeight: "bold",
-    },
-    subtitle: {
-      fontSize: 36,
-      color: "#38434D",
+      color:"white",
+      paddingTop: 60,
     },
   });
   

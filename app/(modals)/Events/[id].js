@@ -7,13 +7,15 @@ import {
   ScrollView,
 } from "react-native";
 import { useLocalSearchParams } from "expo-router";
-import { useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import MapView, {Marker} from "react-native-maps";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+// import MapView, {Marker , PROVIDER_GOOGLE} from "react-native-maps";
 
 import { router } from "expo-router";
 
@@ -28,14 +30,95 @@ export default function Event() {
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   });
+  const [eventCard, setEventCard] = useState([]);
 
   const { id } = useLocalSearchParams();
+
+  useEffect(() => {
+    axios.get(`http://localhost:8080/events/${id}`).then((r) => {
+      const data = r.data;
+      console.log(data);
+      setEventCard(data);
+    });
+  }, []);
+
+  // Time Converter
+  const convDate = new Date(eventCard.timestamp_start * 1000);
+  const endDate = new Date(eventCard.timestamp_end * 1000);
+
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  let timeHrs = convDate.getHours();
+  let timeMin = convDate.getMinutes();
+
+  const amPM = timeHrs >= 12 ? "PM" : "AM";
+  timeHrs = timeHrs % 12;
+  timeHrs = timeHrs ? timeHrs : 12;
+
+  function doubleDigit(num) {
+    return num < 10 ? "0" + `${num}` : num;
+  }
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  let dayOfWeek = days[convDate.getDay()];
+
+  function convertEndDate(time) {
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    let timeHrs = time.getHours();
+    let timeMin = time.getMinutes();
+    const amPM = timeHrs >= 12 ? "PM" : "AM";
+    timeHrs = timeHrs % 12;
+    timeHrs = timeHrs ? timeHrs: 12;
+
+    function doubleDigit(num) {
+      return num < 10 ? "0" + `${num}` : num;
+    }
+
+    return `${convDate.getDate()} ${monthNames[convDate.getMonth()]} ${convDate.getFullYear()} at ${timeHrs}:${doubleDigit(timeMin)} ${amPM}`;
+  }
+
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
         <Image
           style={styles.header__image}
-          source={require("../../../assets/testAsset/1.png")}
+          source={{
+            uri: `http://localhost:8080/eventImg/${eventCard.eventimage_path}`,
+          }}
         />
         <Image style={styles.header__imageGrad} source={gradient} />
         <TouchableOpacity onPress={handleBack} style={styles.header__backIcon}>
@@ -43,16 +126,22 @@ export default function Event() {
         </TouchableOpacity>
         <View style={styles.header__wrap}>
           <View style={styles.header__textWrap}>
-            <Text style={styles.header__headline}>Lisa's Birthday</Text>
-            <Text style={styles.header__date}>21 April 2023 at 6:30pm</Text>
+            <Text style={styles.header__headline}>{eventCard.event_name}</Text>
+            <Text style={styles.header__date}>
+              {convDate.getDate()} {monthNames[convDate.getMonth()]}{" "}
+              {convDate.getFullYear()} at{" "}
+              {`${timeHrs}:${doubleDigit(timeMin)} ${amPM}`}
+            </Text>
           </View>
           <View style={styles.header__hostWrap}>
             <Image
-              source={require("../../../assets/testAsset/uifaces-popular-image.jpg")}
+              source={{
+                uri: `http://localhost:8080/userImg/${eventCard.avatar}`,
+              }}
               style={styles.header__hostImg}
             />
             <Text style={styles.header__hostText}>Hosted by</Text>
-            <Text style={styles.header__hostName}>Kyle</Text>
+            <Text style={styles.header__hostName}>{eventCard.name}</Text>
           </View>
         </View>
       </View>
@@ -70,45 +159,43 @@ export default function Event() {
           <View style={styles.infoBox__dateWrap}>
             <Feather name="calendar" size={24} color="#FDFDFD" />
             <View>
-              <Text style={styles.dateWrap__dayofweek}>Saturday</Text>
-              <Text style={styles.dateWrap__text}>21 April 2023</Text>
-              <Text style={styles.dateWrap__text}>6:30pm - 9pm</Text>
+              <Text style={styles.dateWrap__dayofweek}>{dayOfWeek}</Text>
+              <Text style={styles.dateWrap__text}>
+                {convDate.getDate()} {monthNames[convDate.getMonth()]}{" "}
+                {convDate.getFullYear()} 
+              </Text>
+              <Text style={styles.dateWrap__text}>{`${timeHrs}:${doubleDigit(timeMin)} ${amPM}`} - {convertEndDate(endDate)}</Text>
             </View>
           </View>
           <View style={styles.infoBox__locationMap}>
             <View style={styles.infoBox__locationMapTextWrap}>
               <Ionicons name="location-outline" size={28} color="#FDFDFD" />
               <Text style={styles.infoBox__locationMapText}>
-                144 Front St W, Toronto,{"\n"}ON M5J 2L7
+                {eventCard.address}
               </Text>
             </View>
             <View style={styles.infoBox__locationMapWrap}>
-              <MapView style={styles.map} region={mapRegion} scrollEnabled={false} zoomEnabled={false}>
+              {/* <MapView style={styles.map} provider={PROVIDER_GOOGLE} region={mapRegion} scrollEnabled={false} zoomEnabled={false} minZoomLevel={15}>
                 <Marker coordinate={mapRegion} title='Marker'></Marker>
-              </MapView>
+              </MapView> */}
             </View>
           </View>
         </View>
         <View style={styles.aboutEvent}>
           <Text style={styles.aboutEvent__header}>About</Text>
-          <Text style={styles.aboutEvent__text}>
-            We are having a birthday party for Lisa this Saturday. The address
-            is 144 Front St W, come anytime after 7:00, BYOB, Potluck. If you
-            want to help us with the party DM me in the chat. Hope to see you
-            then!!!
-          </Text>
+          <Text style={styles.aboutEvent__text}>{eventCard.description}</Text>
         </View>
         <View style={styles.hostPage}>
           <Image
             style={styles.hostPage__avatar}
-            source={require("../../../assets/testAsset/uifaces-popular-image.jpg")}
+            source={{
+              uri: `http://localhost:8080/userImg/${eventCard.avatar}`,
+            }}
           ></Image>
           <View style={styles.hostPage__textWrap}>
-            <Text style={styles.hostPage__name}>Kyle</Text>
-            <Text style={styles.hostPage__userTag}>@kyle3000</Text>
-            <Text style={styles.hostPage__description}>
-              Explorer with a penchant for life's surprises.
-            </Text>
+            <Text style={styles.hostPage__name}>{eventCard.name}</Text>
+            <Text style={styles.hostPage__userTag}>{eventCard.tag}</Text>
+            <Text style={styles.hostPage__description}>{eventCard.bio}</Text>
           </View>
           <TouchableOpacity style={styles.hostPage__btnAction}>
             <Text style={styles.hostPage__btnActionText}>Follow</Text>
@@ -116,7 +203,9 @@ export default function Event() {
         </View>
         <View style={styles.attendeesBox}>
           <Ionicons name="people-outline" size={24} color="#FDFDFD" />
-          <Text style={styles.attendeesBox__text}>20+ are going to attend this event</Text>
+          <Text style={styles.attendeesBox__text}>
+            {eventCard.attendees}+ are going to attend this event
+          </Text>
         </View>
       </View>
     </ScrollView>
@@ -136,7 +225,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginHorizontal: 12,
-    marginTop: 130,
+    marginTop: 100,
   },
   header__image: {
     width: "100%",
@@ -145,7 +234,7 @@ const styles = StyleSheet.create({
   },
   header__hostWrap: {
     position: "relative",
-    top: 50,
+    top: 70,
     right: 10,
     alignItems: "flex-end",
   },
@@ -176,6 +265,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   header__headline: {
+    width: 200,
     fontSize: 30,
     fontWeight: "bold",
     color: "#FDFDFD",
@@ -200,7 +290,7 @@ const styles = StyleSheet.create({
     gap: 8,
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 4,
+    marginTop: 35,
     marginBottom: 20,
   },
   infoBox: {
@@ -228,6 +318,8 @@ const styles = StyleSheet.create({
   },
   infoBox__locationMapWrap: {
     flex: 1,
+    overflow: "hidden",
+    borderRadius: 20,
   },
   map: {
     width: "100%",
@@ -261,7 +353,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 32,
     gap: 16,
-    marginBottom: 10
+    marginBottom: 10,
   },
   hostPage__avatar: {
     width: 70,
@@ -298,16 +390,16 @@ const styles = StyleSheet.create({
   hostPage__btnActionText: {
     color: "white",
   },
-  attendeesBox:{
+  attendeesBox: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "rgba(13,13,13,0.5)",
     padding: 32,
     borderRadius: 20,
     gap: 10,
-    marginBottom: 40
+    marginBottom: 40,
   },
-  attendeesBox__text:{
+  attendeesBox__text: {
     color: "#FDFDFD",
-  }
+  },
 });

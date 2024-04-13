@@ -12,7 +12,7 @@ export default function TabsLayout() {
           tabBarActiveTintColor: "#343434",
           tabBarInactiveTintColor: "#EDEDED",
           tabBarStyle: {
-            backgroundColor: "#181818",
+            backgroundColor: "#0C0C0C",
             borderWidth: 0,
             borderTopWidth:0,
             borderTopLeftRadius: 20,
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   },
   background: {
     position: 'absolute',
-    backgroundColor: "#282828",
+    backgroundColor: "#151515",
     height: 100,
     zIndex: -1,
     left: 0,
