@@ -13,9 +13,10 @@ import { EvilIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
+import ButtonCard from "../../../components/ButtonCard";
 import axios from "axios";
 
-// import MapView, {Marker , PROVIDER_GOOGLE} from "react-native-maps";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 
 import { router } from "expo-router";
 
@@ -39,6 +40,12 @@ export default function Event() {
       const data = r.data;
       console.log(data);
       setEventCard(data);
+      setmapRegion({
+        latitude: data.latitude,
+        longitude: data.longitude,
+        latitudeDelta: data.latitudeDelta,
+        longitudeDelta: data.longitudeDelta,
+      });
     });
   }, []);
 
@@ -102,13 +109,15 @@ export default function Event() {
     let timeMin = time.getMinutes();
     const amPM = timeHrs >= 12 ? "PM" : "AM";
     timeHrs = timeHrs % 12;
-    timeHrs = timeHrs ? timeHrs: 12;
+    timeHrs = timeHrs ? timeHrs : 12;
 
     function doubleDigit(num) {
       return num < 10 ? "0" + `${num}` : num;
     }
 
-    return `${convDate.getDate()} ${monthNames[convDate.getMonth()]} ${convDate.getFullYear()} at ${timeHrs}:${doubleDigit(timeMin)} ${amPM}`;
+    return `${convDate.getDate()} ${
+      monthNames[convDate.getMonth()]
+    } ${convDate.getFullYear()} at ${timeHrs}:${doubleDigit(timeMin)} ${amPM}`;
   }
 
   return (
@@ -147,10 +156,8 @@ export default function Event() {
       </View>
       <View style={styles.main}>
         <View style={styles.action__row}>
-          <TouchableOpacity style={styles.joinButton}>
-            <Entypo name="plus" size={18} color="#FDFDFD" />
-            <Text style={{ color: "#FDFDFD" }}>Join</Text>
-          </TouchableOpacity>
+          <ButtonCard isAdded={eventCard.isAdded} byUser={eventCard.byUser}></ButtonCard>
+
           <TouchableOpacity>
             <EvilIcons name="share-google" size={34} color="#CFCFCF" />
           </TouchableOpacity>
@@ -162,9 +169,12 @@ export default function Event() {
               <Text style={styles.dateWrap__dayofweek}>{dayOfWeek}</Text>
               <Text style={styles.dateWrap__text}>
                 {convDate.getDate()} {monthNames[convDate.getMonth()]}{" "}
-                {convDate.getFullYear()} 
+                {convDate.getFullYear()}
               </Text>
-              <Text style={styles.dateWrap__text}>{`${timeHrs}:${doubleDigit(timeMin)} ${amPM}`} - {convertEndDate(endDate)}</Text>
+              <Text style={styles.dateWrap__text}>
+                {`${timeHrs}:${doubleDigit(timeMin)} ${amPM}`} -{" "}
+                {convertEndDate(endDate)}
+              </Text>
             </View>
           </View>
           <View style={styles.infoBox__locationMap}>
@@ -175,9 +185,16 @@ export default function Event() {
               </Text>
             </View>
             <View style={styles.infoBox__locationMapWrap}>
-              {/* <MapView style={styles.map} provider={PROVIDER_GOOGLE} region={mapRegion} scrollEnabled={false} zoomEnabled={false} minZoomLevel={15}>
-                <Marker coordinate={mapRegion} title='Marker'></Marker>
-              </MapView> */}
+              <MapView
+                style={styles.map}
+                provider={PROVIDER_GOOGLE}
+                region={mapRegion}
+                scrollEnabled={false}
+                zoomEnabled={false}
+                minZoomLevel={15}
+              >
+                <Marker coordinate={mapRegion} title="Marker"></Marker>
+              </MapView>
             </View>
           </View>
         </View>

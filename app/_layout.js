@@ -29,8 +29,11 @@ export default function RootLayout() {
         name="CreateEvent"
         options={{
           title: "event",
+          headerShown: false,
+          presentation:"modal"
         }}
       />
+
     </Stack>
   );
 }

@@ -3,11 +3,12 @@ import { router } from "expo-router";
 import { StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
+import ButtonCard from "./ButtonCard";
 
 const cardStyle = require("../assets/bg-image/cardstyle.png");
 
 
-export default function EventCard({ event_name, address, permission, date , id ,name , avatar, path}) {
+export default function EventCard({ event_name, address, permission, date , id ,name , avatar, path , byUser, isAdded}) {
   function handlePress() {
     router.navigate(`(modals)/Events/${id}`);
   }
@@ -45,10 +46,7 @@ export default function EventCard({ event_name, address, permission, date , id ,
               <Text style={styles.cardHeader__header}>{name}</Text>
             </View>
           </View>
-          <TouchableOpacity style={styles.button}>
-            <Entypo name="plus" size={18} color="#FDFDFD" />
-            <Text style={styles.buttonText}>Join</Text>
-          </TouchableOpacity>
+        <ButtonCard isAdded={isAdded} byUser={byUser}></ButtonCard>
         </View>
         <View style={styles.cardDetails}>
           <View>
@@ -107,21 +105,6 @@ const styles = StyleSheet.create({
   },
   cardHeader__user: {
     flexDirection: "column",
-  },
-  button: {
-    flexDirection: "row",
-    gap: 4,
-    width: 100,
-    height: 40,
-    backgroundColor: "#00BB4B",
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 15,
-  },
-  buttonText: {
-    color: "#FDFDFD",
-    fontWeight: "700",
   },
   cardDetails: {
     paddingTop: 8,

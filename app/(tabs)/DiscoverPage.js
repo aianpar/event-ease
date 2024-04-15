@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Entypo } from "@expo/vector-icons";
 import ButtonRedirect from "../../components/ButtonRedirect";
+import { useFocusEffect } from "expo-router";
 
 const { width } = Dimensions.get("window");
 
@@ -47,7 +48,7 @@ export default function DiscoverPage() {
       const data = r.data;
       setEventCard(data);
     });
-  }, []);
+  },[]);
 
   return (
     <View style={styles.container}>
@@ -95,6 +96,8 @@ export default function DiscoverPage() {
               avatar={item.avatar}
               date={item.timestamp_start}
               path={item.eventimage_path}
+              byUser={item.byUser}
+              isAdded={item.isAdded}
             ></EventCard>
           );
         })}
