@@ -14,7 +14,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Entypo } from "@expo/vector-icons";
 import ButtonRedirect from "../../components/ButtonRedirect";
-import { useFocusEffect } from "expo-router";
+import { useFocusEffect, router } from "expo-router";
+import { useCallback } from "react";
 
 const { width } = Dimensions.get("window");
 
@@ -42,13 +43,51 @@ const categories = [
 ];
 
 export default function DiscoverPage() {
+  const [filter, setFilter] = useState("");
   const [eventCard, setEventCard] = useState([]);
-  useEffect(() => {
-    axios.get("http://localhost:8080/events").then((r) => {
-      const data = r.data;
-      setEventCard(data);
-    });
-  },[]);
+  const [allEvents, setAllEvents] = useState([])
+  useFocusEffect(
+    useCallback(() => {
+      axios.get("http://localhost:8080/events").then((r) => {
+        const data = r.data;
+        setEventCard(data);
+        setAllEvents(data)
+        console.log(data);
+      });
+    }, [])
+  );
+
+  function toggleCategory(item) {
+    if (filter === `${item}`){
+      console.log(item)
+      setEventCard(allEvents)
+      setFilter("")
+    } else {
+      let filteredEvents = allEvents;
+
+      if (item === "Today"){
+        filteredEvents = allEvents.filter(e => e.isToday === 1)
+
+      }
+      else if (item === "Tommorow"){
+        filteredEvents = allEvents.filter(e => e.isTommorow === 1)
+      }
+      else if  (item === "This week"){
+        filteredEvents = allEvents.filter(e => e.isThisWeek === 1)
+
+      }
+      else if  (item === "This Month"){
+        filteredEvents = allEvents.filter(e => e.isThisMonth === 1)
+
+      }
+      else if  (item === "By Friends"){
+        filteredEvents = []
+      }
+      setEventCard(filteredEvents)
+      setFilter(item)
+    }
+    console.log(item)
+  }
 
   return (
     <View style={styles.container}>
@@ -73,7 +112,13 @@ export default function DiscoverPage() {
           }}
         >
           {categories.map((item, index) => (
-            <TouchableOpacity style={styles.categories} key={index}>
+            <TouchableOpacity
+              onPress={() => {
+                toggleCategory(item.name);
+              }}
+              style={item.name === filter? styles.categories_selected:styles.categories}
+              key={index}
+            >
               <Image
                 style={styles.categories__image}
                 source={item.uri}
@@ -84,23 +129,25 @@ export default function DiscoverPage() {
           ))}
         </ScrollView>
         <Text style={styles.header}>Around You</Text>
-        {eventCard.map((item, i) => {
-          return (
-            <EventCard
-              key={i}
-              event_name={item.event_name}
-              permission={item.permission}
-              address={item.address}
-              id={item.id}
-              name={item.name}
-              avatar={item.avatar}
-              date={item.timestamp_start}
-              path={item.eventimage_path}
-              byUser={item.byUser}
-              isAdded={item.isAdded}
-            ></EventCard>
-          );
-        })}
+        {eventCard
+          .filter((item) => item.byUser !== 1)
+          .map((item, i) => {
+            return (
+              <EventCard
+                key={i}
+                event_name={item.event_name}
+                permission={item.permission}
+                address={item.address}
+                id={item.id}
+                name={item.name}
+                avatar={item.avatar}
+                date={item.timestamp_start}
+                path={item.eventimage_path}
+                byUser={item.byUser}
+                isAdded={item.isAdded}
+              ></EventCard>
+            );
+          })}
       </ScrollView>
       <ButtonRedirect></ButtonRedirect>
     </View>
@@ -116,7 +163,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingBottom: 8,
+    paddingBottom: 14,
+  },
+  categories_selected: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingBottom: 12,
+    borderBottomColor: "white",
+    borderBottomWidth: 2
   },
   categories__image: {
     width: width * 0.2,

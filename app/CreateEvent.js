@@ -7,6 +7,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import { useState } from "react";
+import { router } from "expo-router";
 import { Checkbox, TextField, Button } from "react-native-ui-lib";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
@@ -103,7 +104,10 @@ export default function CreateEvent() {
       );}
       catch(err){
         console.log(err)
+        router.back()
+
       }
+      router.back()
   }
 
   const reverseGeocode = async () => {
@@ -118,7 +122,7 @@ export default function CreateEvent() {
   function toggleCategory(item) {
     if (selectedCategory.includes(item)) {
       setSelectedCategory(
-        prevSelectedCategory.filter((selectedCategory) => selectedCategory !== item)
+        selectedCategory.filter((selectedCategory) => selectedCategory !== item)
       );
     }else{
       setSelectedCategory([...selectedCategory, item]);

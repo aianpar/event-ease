@@ -2,9 +2,8 @@ import { TouchableOpacity, Text, StyleSheet } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 
 export default function ButtonCard({ isAdded, byUser }) {
-  console.log("added", isAdded,"byuser", byUser);
 
-  if (byUser === 1) {
+  if (byUser === 1 && isAdded === 1) {
     return (
       <>
         <TouchableOpacity style={styles.button}>

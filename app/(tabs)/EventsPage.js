@@ -4,17 +4,21 @@ import EventCard from "../../components/EventCard";
 import axios from "axios";
 import { useFocusEffect } from "expo-router";
 import { useState ,useEffect} from "react";
+import { useCallback } from "react";
+
 
 export default function EventsPage(){
   const [eventCard,setEventCard] = useState([])
   
-  useEffect(() => {
-    axios.get("http://localhost:8080/events").then((r) => {
-      const data = r.data;
-      setEventCard(data);
-      console.log(data)
-    });
-  },[]);
+  useFocusEffect(
+    useCallback(() => {
+      axios.get("http://localhost:8080/events").then((r) => {
+        const data = r.data;
+        setEventCard(data);
+        console.log(data);
+      });
+    }, [])
+  );
 
     return (
         <ScrollView style={styles.container}>
