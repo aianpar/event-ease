@@ -1,10 +1,23 @@
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { router } from "expo-router";
+import axios from "axios";
 
-export default function ButtonCard({ isAdded, byUser , id }) {
-function handleEditButton(){
+export default function ButtonCard({ isAdded, byUser , id ,refreshPage}) {
+
+  function handleEditButton(){
     router.navigate(`EditEvent/${id}`)
+}
+
+const handleJoinButton = async (id)=>{
+  try{
+    const response = await axios.put(`http://localhost:8080/events/${id}`,{
+      isAdded: true,
+    });
+    router.navigate(`/`);
+  } catch(err){
+    console.log(err)
+  }
 }
 
   if (byUser === 1 && isAdded === 1) {
@@ -28,12 +41,10 @@ function handleEditButton(){
   }
 
   return (
-    <>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={()=>{handleJoinButton(id)}}>
         <Entypo name="plus" size={18} color="#FDFDFD" />
         <Text style={styles.buttonText}>Join</Text>
       </TouchableOpacity>
-    </>
   );
 
   }

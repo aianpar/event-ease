@@ -8,7 +8,7 @@ import ButtonCard from "./ButtonCard";
 const cardStyle = require("../assets/bg-image/cardstyle.png");
 
 
-export default function EventCard({ event_name, address, permission, date , id ,name , avatar, path , byUser, isAdded}) {
+export default function EventCard({ event_name, address, permission, date , id ,name , avatar, path , byUser, isAdded , refreshPage}) {
   function handlePress() {
     router.navigate(`(modals)/Events/${id}`);
   }
@@ -46,7 +46,7 @@ export default function EventCard({ event_name, address, permission, date , id ,
               <Text style={styles.cardHeader__header}>{name}</Text>
             </View>
           </View>
-        <ButtonCard isAdded={isAdded} byUser={byUser} id={id}></ButtonCard>
+        <ButtonCard isAdded={isAdded} byUser={byUser} id={id} refreshPage={refreshPage}></ButtonCard>
         </View>
         <View style={styles.cardDetails}>
           <View>

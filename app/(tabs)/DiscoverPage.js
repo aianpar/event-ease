@@ -16,6 +16,7 @@ import { Entypo } from "@expo/vector-icons";
 import ButtonRedirect from "../../components/ButtonRedirect";
 import { useFocusEffect, router } from "expo-router";
 import { useCallback } from "react";
+import ButtonCard from "../../components/ButtonCard";
 
 const { width } = Dimensions.get("window");
 
@@ -52,9 +53,12 @@ export default function DiscoverPage() {
         const data = r.data;
         setEventCard(data);
         setAllEvents(data)
+        console.log(data)
       });
     }, [])
   );
+
+  
 
   function toggleCategory(item) {
     if (filter === `${item}`){
@@ -127,7 +131,7 @@ export default function DiscoverPage() {
         </ScrollView>
         <Text style={styles.header}>Around You</Text>
         {eventCard
-          .filter((item) => item.byUser !== 1)
+          .filter((item) => item.byUser !== 1 ).filter((item)=> item.isAdded !==1 )
           .map((item, i) => {
             return (
               <EventCard

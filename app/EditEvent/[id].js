@@ -19,10 +19,9 @@ import { useLocalSearchParams } from "expo-router";
 import { useFocusEffect } from "expo-router";
 import { useCallback } from "react";
 
-
 export default function EditEvent() {
   const { id } = useLocalSearchParams();
-  const [data,setData] = useState({})
+  const [data, setData] = useState({});
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [draggableCoord, setDraggableCoord] = useState({
     latitude: 43.649249,
@@ -57,31 +56,40 @@ export default function EditEvent() {
     longitudeDelta: 0.054073,
   });
 
+  const handleDelete = async(id) =>{
+    try {
+      const response = await axios.delete(`http://localhost:8080/events/${id}`)
+      router.navigate(`/`);
+    } catch(err) {
+      router.navigate(`/`);
+    }
+  }
+
   useFocusEffect(
     useCallback(() => {
       axios.get(`http://localhost:8080/events/${id}`).then((r) => {
         const data = r.data;
-        console.log(data)
+        console.log(data);
         setData(data);
-        setEventName(data.event_name)
-        setDescription(data.description)
-        const convDate =  new Date(data.timestamp_start*1000);
-        const convEndDate = new Date(data.timestamp_end*1000);
-        setDate(convDate)
-        setEndDate(convEndDate)
-        setPermission(data.permission)
+        setEventName(data.event_name);
+        setDescription(data.description);
+        const convDate = new Date(data.timestamp_start * 1000);
+        const convEndDate = new Date(data.timestamp_end * 1000);
+        setDate(convDate);
+        setEndDate(convEndDate);
+        setPermission(data.permission);
         setmapRegion({
-          latitude:data.latitude,
-          longitude:data.longitude,
-          latitudeDelta:data.latitudeDelta,
-          longitudeDelta:data.longitudeDelta,
-        })
+          latitude: data.latitude,
+          longitude: data.longitude,
+          latitudeDelta: data.latitudeDelta,
+          longitudeDelta: data.longitudeDelta,
+        });
         setDraggableCoord({
-          latitude:data.latitude,
-          longitude:data.longitude,
-          latitudeDelta:data.latitudeDelta,
-          longitudeDelta:data.longitudeDelta,
-        })
+          latitude: data.latitude,
+          longitude: data.longitude,
+          latitudeDelta: data.latitudeDelta,
+          longitudeDelta: data.longitudeDelta,
+        });
       });
     }, [])
   );
@@ -177,7 +185,9 @@ export default function EditEvent() {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
         <Link href="#"></Link>
-        <Text style={styles.header}>What do you want to change {id}</Text>
+        <Text style={styles.header}>
+          What do you want to change in {data.event_name}?
+        </Text>
 
         <View style={styles.form_container}>
           <View>
@@ -296,13 +306,16 @@ export default function EditEvent() {
         </View>
 
         <Button
-          style={{ marginBottom: 50 }}
           type="submit"
           label="Submit"
           onPress={() => {
             onSubmitHandler();
           }}
         />
+      <Pressable>
+        <Text style={styles.deleteBttn} onPress={()=>{handleDelete(id)}}>Delete the event</Text>
+      </Pressable>
+
       </ScrollView>
     </SafeAreaView>
   );
@@ -350,4 +363,11 @@ const styles = StyleSheet.create({
     padding: 8,
     alignSelf: "flex-start",
   },
+  deleteBttn: {
+    fontSize: 20,
+    color: "grey",
+    alignSelf: "center",
+    marginTop: 20,
+    marginBottom: 100,
+  }
 });

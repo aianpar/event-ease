@@ -149,14 +149,14 @@ export default function Event() {
               }}
               style={styles.header__hostImg}
             />
-            <Text style={styles.header__hostText}>Hosted by</Text>
+            <Text style={styles.header__hostText}>Created by</Text>
             <Text style={styles.header__hostName}>{eventCard.name}</Text>
           </View>
         </View>
       </View>
       <View style={styles.main}>
         <View style={styles.action__row}>
-          <ButtonCard isAdded={eventCard.isAdded} byUser={eventCard.byUser}></ButtonCard>
+          <ButtonCard isAdded={eventCard.isAdded} byUser={eventCard.byUser} id={id}></ButtonCard>
 
           <TouchableOpacity>
             <EvilIcons name="share-google" size={34} color="#CFCFCF" />

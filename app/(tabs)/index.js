@@ -29,7 +29,7 @@ export default function Page() {
             />
           </View>
           <View>
-            <Text style={{ color: "white", fontSize: 25 }}>Upcoming</Text>
+            <Text style={styles.header_text}>Upcoming</Text>
           </View>
           <View style={styles.eventCard_wrap}>
           {eventCard
@@ -86,5 +86,10 @@ const styles = StyleSheet.create({
   eventCard_wrap:{
     marginTop: 20,
     gap: 20,
-  }
+  },
+  header_text: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#FDFDFD",
+  },
 });
