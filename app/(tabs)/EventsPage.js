@@ -15,7 +15,6 @@ export default function EventsPage(){
       axios.get("http://localhost:8080/events").then((r) => {
         const data = r.data;
         setEventCard(data);
-        console.log(data);
       });
     }, [])
   );
@@ -24,6 +23,7 @@ export default function EventsPage(){
         <ScrollView style={styles.container}>
         <View style={styles.main}>
           <Text style={styles.title}>Your Events</Text>
+          <View style={styles.eventCard_wrap}>
           {eventCard.filter(item => item.byUser === 1).map((item, i) => {
           return (
             <EventCard
@@ -41,6 +41,7 @@ export default function EventsPage(){
             ></EventCard>
           );
         })}
+        </View>
         </View>
       </ScrollView>
     );
@@ -65,6 +66,10 @@ export default function EventsPage(){
     },
     card: {
       marginVertical: 10,
+    },
+    eventCard_wrap:{
+      marginTop: 20,
+      gap: 20,
     }
   });
   

@@ -13,7 +13,6 @@ export default function Page() {
       axios.get("http://localhost:8080/events").then((r) => {
         const data = r.data;
         setEventCard(data);
-        console.log(data);
       });
     }, [])
   );
@@ -32,6 +31,7 @@ export default function Page() {
           <View>
             <Text style={{ color: "white", fontSize: 25 }}>Upcoming</Text>
           </View>
+          <View style={styles.eventCard_wrap}>
           {eventCard
             .filter((item) => item.isAdded === 1)
             .map((item, i) => {
@@ -51,6 +51,7 @@ export default function Page() {
                 ></EventCard>
               );
             })}
+            </View>
           <Link href={"(modals)/Filter"}>Filter</Link>
           <Link href={"/events/12"}>Link</Link>
         </View>
@@ -82,4 +83,8 @@ const styles = StyleSheet.create({
     top: -90,
     left: -100,
   },
+  eventCard_wrap:{
+    marginTop: 20,
+    gap: 20,
+  }
 });

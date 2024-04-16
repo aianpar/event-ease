@@ -38,8 +38,8 @@ export default function Event() {
   useEffect(() => {
     axios.get(`http://localhost:8080/events/${id}`).then((r) => {
       const data = r.data;
-      console.log(data);
       setEventCard(data);
+      console.log(data)
       setmapRegion({
         latitude: data.latitude,
         longitude: data.longitude,
@@ -115,9 +115,9 @@ export default function Event() {
       return num < 10 ? "0" + `${num}` : num;
     }
 
-    return `${convDate.getDate()} ${
-      monthNames[convDate.getMonth()]
-    } ${convDate.getFullYear()} at ${timeHrs}:${doubleDigit(timeMin)} ${amPM}`;
+    return `${endDate.getDate()} ${
+      monthNames[endDate.getMonth()]
+    } ${endDate.getFullYear()} at ${timeHrs}:${doubleDigit(timeMin)} ${amPM}`;
   }
 
   return (
@@ -172,7 +172,7 @@ export default function Event() {
                 {convDate.getFullYear()}
               </Text>
               <Text style={styles.dateWrap__text}>
-                {`${timeHrs}:${doubleDigit(timeMin)} ${amPM}`} -{" "}
+                {`${timeHrs}:${doubleDigit(timeMin)} ${amPM}`} - {" "}
                 {convertEndDate(endDate)}
               </Text>
             </View>

@@ -15,8 +15,14 @@ import * as Location from "expo-location";
 import { Link } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
 import axios from "axios";
+import { useLocalSearchParams } from "expo-router";
+import { useFocusEffect } from "expo-router";
+import { useCallback } from "react";
 
-export default function CreateEvent() {
+
+export default function EditEvent() {
+  const { id } = useLocalSearchParams();
+  const [data,setData] = useState({})
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [draggableCoord, setDraggableCoord] = useState({
     latitude: 43.649249,
@@ -51,6 +57,35 @@ export default function CreateEvent() {
     longitudeDelta: 0.054073,
   });
 
+  useFocusEffect(
+    useCallback(() => {
+      axios.get(`http://localhost:8080/events/${id}`).then((r) => {
+        const data = r.data;
+        console.log(data)
+        setData(data);
+        setEventName(data.event_name)
+        setDescription(data.description)
+        const convDate =  new Date(data.timestamp_start*1000);
+        const convEndDate = new Date(data.timestamp_end*1000);
+        setDate(convDate)
+        setEndDate(convEndDate)
+        setPermission(data.permission)
+        setmapRegion({
+          latitude:data.latitude,
+          longitude:data.longitude,
+          latitudeDelta:data.latitudeDelta,
+          longitudeDelta:data.longitudeDelta,
+        })
+        setDraggableCoord({
+          latitude:data.latitude,
+          longitude:data.longitude,
+          latitudeDelta:data.latitudeDelta,
+          longitudeDelta:data.longitudeDelta,
+        })
+      });
+    }, [])
+  );
+
   const onChangeStartDate = (event, selectedDate) => {
     const currentDate = selectedDate;
     setDate(currentDate);
@@ -61,7 +96,7 @@ export default function CreateEvent() {
     setEndDate(currentDate);
   };
 
-  const onSubmitHandler = async () =>{
+  const onSubmitHandler = async () => {
     if (!eventName || !description) {
       return;
     }
@@ -84,31 +119,27 @@ export default function CreateEvent() {
     );
 
     const dateObj = new Date(date);
-    const endDateObj = new Date(endDate)
+    const endDateObj = new Date(endDate);
     try {
-      const response = await axios.post(
-        "http://localhost:8080/events",
-        {
-          event_name: eventName,
-          description: description,
-          timestamp_start: Math.floor(dateObj.getTime() / 1000),
-          timestamp_end: Math.floor(endDateObj.getTime()/ 1000),
-          permission: permission,
-          latitude: draggableCoord.latitude,
-          longitude: draggableCoord.longitude,
-          latitudeDelta: draggableCoord.latitudeDelta,
-          longitudeDelta: draggableCoord.longitudeDelta,
-          address: `${address[0].name} ${address[0].district}, ${address[0].city}`,
-          categories: selectedCategory,
-        }
-      );}
-      catch(err){
-        console.log(err)
-        router.back()
-
-      }
-      router.back()
-  }
+      const response = await axios.put(`http://localhost:8080/events/${id}`, {
+        event_name: eventName,
+        description: description,
+        timestamp_start: Math.floor(dateObj.getTime() / 1000),
+        timestamp_end: Math.floor(endDateObj.getDate() / 1000),
+        permission: permission,
+        latitude: draggableCoord.latitude,
+        longitude: draggableCoord.longitude,
+        latitudeDelta: draggableCoord.latitudeDelta,
+        longitudeDelta: draggableCoord.longitudeDelta,
+        address: `${address[0].name} ${address[0].district}, ${address[0].city}`,
+        // categories: selectedCategory,
+      });
+    } catch (err) {
+      console.log(err);
+      router.back();
+    }
+    router.back();
+  };
 
   const reverseGeocode = async () => {
     const reverseGeocodeAddress = await Location.reverseGeocodeAsync({
@@ -124,10 +155,10 @@ export default function CreateEvent() {
       setSelectedCategory(
         selectedCategory.filter((selectedCategory) => selectedCategory !== item)
       );
-    }else{
+    } else {
       setSelectedCategory([...selectedCategory, item]);
     }
-    console.log(selectedCategory)
+    console.log(selectedCategory);
   }
 
   const categories = [
@@ -146,7 +177,7 @@ export default function CreateEvent() {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
         <Link href="#"></Link>
-        <Text style={styles.header}>Tell us about your event 🎉</Text>
+        <Text style={styles.header}>What do you want to change {id}</Text>
 
         <View style={styles.form_container}>
           <View>
@@ -254,10 +285,8 @@ export default function CreateEvent() {
             <Text>Choose Permissions</Text>
             <Picker
               selectedValue={permission}
-              onValueChange={(value, itemIndex) =>
-                setPermission(value)
-              }
-              mode='dialog'
+              onValueChange={(value, itemIndex) => setPermission(value)}
+              mode="dialog"
               te
             >
               <Picker.Item color="white" label="Public" value="Public" />
@@ -267,7 +296,7 @@ export default function CreateEvent() {
         </View>
 
         <Button
-          style={{marginBottom:50}}
+          style={{ marginBottom: 50 }}
           type="submit"
           label="Submit"
           onPress={() => {
@@ -275,7 +304,7 @@ export default function CreateEvent() {
           }}
         />
       </ScrollView>
-      </SafeAreaView>
+    </SafeAreaView>
   );
 }
 

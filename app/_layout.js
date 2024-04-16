@@ -33,6 +33,14 @@ export default function RootLayout() {
           presentation:"modal"
         }}
       />
+       <Stack.Screen
+        name="EditEvent/[id]"
+        options={{
+          title: "event",
+          headerShown: false,
+          presentation:"modal"
+        }}
+      />
 
     </Stack>
   );

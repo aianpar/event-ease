@@ -1,12 +1,16 @@
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
 import { Entypo } from "@expo/vector-icons";
+import { router } from "expo-router";
 
-export default function ButtonCard({ isAdded, byUser }) {
+export default function ButtonCard({ isAdded, byUser , id }) {
+function handleEditButton(){
+    router.navigate(`EditEvent/${id}`)
+}
 
   if (byUser === 1 && isAdded === 1) {
     return (
       <>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleEditButton}>
           <Entypo name="edit" size={18} color="#FDFDFD" />
           <Text style={styles.buttonText}>Manage</Text>
         </TouchableOpacity>

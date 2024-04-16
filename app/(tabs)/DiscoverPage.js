@@ -52,14 +52,12 @@ export default function DiscoverPage() {
         const data = r.data;
         setEventCard(data);
         setAllEvents(data)
-        console.log(data);
       });
     }, [])
   );
 
   function toggleCategory(item) {
     if (filter === `${item}`){
-      console.log(item)
       setEventCard(allEvents)
       setFilter("")
     } else {
@@ -86,7 +84,6 @@ export default function DiscoverPage() {
       setEventCard(filteredEvents)
       setFilter(item)
     }
-    console.log(item)
   }
 
   return (

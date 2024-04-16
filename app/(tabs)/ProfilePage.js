@@ -9,7 +9,6 @@ export default function ProfilePage() {
   useEffect(() => {
     axios.get("http://localhost:8080").then((r) => {
       const data = r.data;
-      console.log(data)
       setUser(data)
     });
   }, []);

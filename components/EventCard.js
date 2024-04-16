@@ -42,11 +42,11 @@ export default function EventCard({ event_name, address, permission, date , id ,
           <View style={styles.cardHeader__user}>
             <Image source={{uri:`http://localhost:8080/userImg/${avatar}`}} style={styles.cardHeader__image}></Image>
             <View style={styles.cardHeader__textWrap}>
-              <Text style={styles.cardHeader__subhead}>From your Contacts</Text>
+              <Text style={styles.cardHeader__subhead}>Created by</Text>
               <Text style={styles.cardHeader__header}>{name}</Text>
             </View>
           </View>
-        <ButtonCard isAdded={isAdded} byUser={byUser}></ButtonCard>
+        <ButtonCard isAdded={isAdded} byUser={byUser} id={id}></ButtonCard>
         </View>
         <View style={styles.cardDetails}>
           <View>
