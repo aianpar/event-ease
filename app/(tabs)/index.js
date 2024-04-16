@@ -22,7 +22,8 @@ export default function Page() {
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View>
           <View style={styles.header}>
-            <Text style={styles.title}>Welcome</Text>
+            <Text style={styles.title}>Welcome,{"\n"}Alex!</Text>
+            <Image style={styles.userImg} source={require('../../assets/testAsset/uifaces-popular-image.jpg')}/>
             <Image
               source={require("../../assets/bg-image/homebg.png")}
               style={styles.eclipseBg}
@@ -70,6 +71,8 @@ const styles = StyleSheet.create({
   header: {
     flex: 1,
     height: 130,
+    flexDirection: "row",
+    justifyContent:"space-between"
   },
   title: {
     fontSize: 24,
@@ -88,8 +91,16 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   header_text: {
+    marginTop: 20,
     fontSize: 24,
     fontWeight: "bold",
     color: "#FDFDFD",
   },
+  userImg:{
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+    marginTop: 65,
+    marginRight: 10,
+  }
 });

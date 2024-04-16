@@ -20,7 +20,7 @@ export default function EventsPage(){
   );
 
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.main}>
           <Text style={styles.title}>Your Events</Text>
           <View style={styles.eventCard_wrap}>
@@ -51,6 +51,7 @@ export default function EventsPage(){
   const styles = StyleSheet.create({
     container: {
       flex: 1,
+      paddingTop: 24,
       paddingHorizontal: 12,
       backgroundColor: "#151515"
     },

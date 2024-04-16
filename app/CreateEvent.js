@@ -61,7 +61,7 @@ export default function CreateEvent() {
     setEndDate(currentDate);
   };
 
-  const onSubmitHandler = async () =>{
+  const onSubmitHandler = async () => {
     if (!eventName || !description) {
       return;
     }
@@ -84,31 +84,27 @@ export default function CreateEvent() {
     );
 
     const dateObj = new Date(date);
-    const endDateObj = new Date(endDate)
+    const endDateObj = new Date(endDate);
     try {
-      const response = await axios.post(
-        "http://localhost:8080/events",
-        {
-          event_name: eventName,
-          description: description,
-          timestamp_start: Math.floor(dateObj.getTime() / 1000),
-          timestamp_end: Math.floor(endDateObj.getTime()/ 1000),
-          permission: permission,
-          latitude: draggableCoord.latitude,
-          longitude: draggableCoord.longitude,
-          latitudeDelta: draggableCoord.latitudeDelta,
-          longitudeDelta: draggableCoord.longitudeDelta,
-          address: `${address[0].name} ${address[0].district}, ${address[0].city}`,
-          categories: selectedCategory,
-        }
-      );}
-      catch(err){
-        console.log(err)
-        router.back()
-
-      }
-      router.back()
-  }
+      const response = await axios.post("http://localhost:8080/events", {
+        event_name: eventName,
+        description: description,
+        timestamp_start: Math.floor(dateObj.getTime() / 1000),
+        timestamp_end: Math.floor(endDateObj.getTime() / 1000),
+        permission: permission,
+        latitude: draggableCoord.latitude,
+        longitude: draggableCoord.longitude,
+        latitudeDelta: draggableCoord.latitudeDelta,
+        longitudeDelta: draggableCoord.longitudeDelta,
+        address: `${address[0].name} ${address[0].district}, ${address[0].city}`,
+        categories: selectedCategory,
+      });
+    } catch (err) {
+      console.log(err);
+      router.back();
+    }
+    router.back();
+  };
 
   const reverseGeocode = async () => {
     const reverseGeocodeAddress = await Location.reverseGeocodeAsync({
@@ -124,10 +120,10 @@ export default function CreateEvent() {
       setSelectedCategory(
         selectedCategory.filter((selectedCategory) => selectedCategory !== item)
       );
-    }else{
+    } else {
       setSelectedCategory([...selectedCategory, item]);
     }
-    console.log(selectedCategory)
+    console.log(selectedCategory);
   }
 
   const categories = [
@@ -144,7 +140,7 @@ export default function CreateEvent() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <Link href="#"></Link>
         <Text style={styles.header}>Tell us about your event 🎉</Text>
 
@@ -225,10 +221,8 @@ export default function CreateEvent() {
               />
             </MapView>
           </View>
-          <Text>
-            {address[0].district}
-            {address[0].streetNumber}
-            {address[0].street}
+          <Text style={styles.text_address}>
+            {address[0].streetNumber} {address[0].street} {address[0].district}
           </Text>
           <Button onPress={reverseGeocode} label="Pick"></Button>
         </View>
@@ -251,13 +245,11 @@ export default function CreateEvent() {
             })}
           </View>
           <View>
-            <Text>Choose Permissions</Text>
+            <Text style={styles.permission_header}>Choose Permissions</Text>
             <Picker
               selectedValue={permission}
-              onValueChange={(value, itemIndex) =>
-                setPermission(value)
-              }
-              mode='dialog'
+              onValueChange={(value, itemIndex) => setPermission(value)}
+              mode="dialog"
               te
             >
               <Picker.Item color="white" label="Public" value="Public" />
@@ -267,7 +259,7 @@ export default function CreateEvent() {
         </View>
 
         <Button
-          style={{marginBottom:50}}
+          style={{ marginBottom: 50 }}
           type="submit"
           label="Submit"
           onPress={() => {
@@ -275,7 +267,7 @@ export default function CreateEvent() {
           }}
         />
       </ScrollView>
-      </SafeAreaView>
+    </SafeAreaView>
   );
 }
 
@@ -321,4 +313,18 @@ const styles = StyleSheet.create({
     padding: 8,
     alignSelf: "flex-start",
   },
+  text_address: {
+    alignSelf: "center",
+    color: "white",
+    fontWeight: "bold",
+    margin: 20,
+  },
+  permission_header:{
+    alignSelf: "center",
+    fontSize: 16,
+    fontWeight: 400,
+    marginTop: 20,
+    marginBottom: -60,
+    color: "white"
+  }
 });

@@ -183,7 +183,7 @@ export default function EditEvent() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <Link href="#"></Link>
         <Text style={styles.header}>
           What do you want to change in {data.event_name}?
@@ -266,10 +266,8 @@ export default function EditEvent() {
               />
             </MapView>
           </View>
-          <Text>
-            {address[0].district}
-            {address[0].streetNumber}
-            {address[0].street}
+          <Text style={styles.text_address}>
+            {address[0].streetNumber} {address[0].street} {address[0].district}
           </Text>
           <Button onPress={reverseGeocode} label="Pick"></Button>
         </View>
@@ -292,7 +290,7 @@ export default function EditEvent() {
             })}
           </View>
           <View>
-            <Text>Choose Permissions</Text>
+          <Text style={styles.permission_header}>Choose Permissions</Text>
             <Picker
               selectedValue={permission}
               onValueChange={(value, itemIndex) => setPermission(value)}
@@ -369,5 +367,19 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 20,
     marginBottom: 100,
+  },
+  text_address: {
+    alignSelf: "center",
+    color: "white",
+    fontWeight: "bold",
+    margin: 20,
+  },
+  permission_header:{
+    alignSelf: "center",
+    fontSize: 16,
+    fontWeight: 400,
+    marginTop: 20,
+    marginBottom: -60,
+    color: "white"
   }
 });

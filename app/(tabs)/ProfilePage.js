@@ -9,25 +9,33 @@ export default function ProfilePage() {
   useEffect(() => {
     axios.get("http://localhost:8080").then((r) => {
       const data = r.data;
-      setUser(data)
+      setUser(data);
     });
   }, []);
-
-  if (!user) {
-    return (
-      <View style={styles.container}>
-        <View style={styles.main}>
-          <Text style={styles.title}>Profile</Text>
-        </View>
-      </View>
-    );
-  }
 
   return (
     <View style={styles.container}>
       <View style={styles.main}>
         <Text style={styles.title}>Profile</Text>
-        <Image source={{uri:`http://localhost:8080/userImg/${user.user_avatar}`}} style={{flex:1}} width={200} height={200}></Image>
+        <View style={styles.profile_wrap}>
+          <View style={styles.image_wrap}>
+            <Image
+              style={styles.image}
+              source={require("../../assets/testAsset/uifaces-popular-image.jpg")}
+            />
+          </View>
+          <View style={styles.text_wrap}>
+            <Text style={styles.text_name}>Alex Turner</Text>
+            <Text style={styles.text_usertag}>@alexTurner</Text>
+            <Text style={styles.text_bio}>
+              Explorer 🌍 | Nature Lover 🌿 | Coffee Addict ☕️ | Bookworm 📚
+            </Text>
+          </View>
+        </View>
+        <View style={styles.proifleInfo_wrap}>
+            <Text style={styles.text_usertag}>EventEase Member since</Text>
+            <Text style={styles.date}>19 April 2024</Text>
+        </View>
       </View>
     </View>
   );
@@ -36,22 +44,56 @@ export default function ProfilePage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
     padding: 24,
     backgroundColor: "#151515",
   },
   main: {
     flex: 1,
-    justifyContent: "center",
     maxWidth: 960,
     marginHorizontal: "auto",
   },
   title: {
-    fontSize: 64,
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "white",
+    paddingTop: 60,
+  },
+  profile_wrap: {
+    alignItems:"flex-start",
+    marginTop: 20,
+    flexDirection: "row",
+    backgroundColor: "#282828",
+    borderRadius: 10,
+    padding: 20,
+    gap: 20,
+  },
+  image: {
+    width: 70,
+    height: 70,
+    borderRadius: 50,
+  },
+  text_name: {
+    color: "white",
+    fontSize: 20,
     fontWeight: "bold",
   },
-  subtitle: {
-    fontSize: 36,
-    color: "#38434D",
+  text_usertag: {
+    color: "white",
   },
+  text_bio: {
+    paddingTop:20,
+    width: 180,
+    color: "white"
+  },
+  proifleInfo_wrap:{
+    alignItems:"flex-start",
+    marginTop: 20,
+    backgroundColor: "#282828",
+    borderRadius: 10,
+    padding: 20,
+    gap: 5,
+  },
+  date:{
+    color:"#B0AAAA",
+  }
 });
