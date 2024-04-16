@@ -1,3 +1,4 @@
+
 import { Stack } from "expo-router";
 
 export default function RootLayout() {
@@ -8,6 +9,7 @@ export default function RootLayout() {
         options={{
           headerShown: false,
           presentation: "card",
+          title: "Main Page",
         }}
       />
       <Stack.Screen
@@ -38,6 +40,20 @@ export default function RootLayout() {
         options={{
           title: "event",
           headerShown: false,
+          presentation:"modal"
+        }}
+      />
+        <Stack.Screen
+        name="Chat/[id]"
+        options={{
+          title: "Chat",
+          presentation: "card"
+        }}
+      />
+      <Stack.Screen
+        name="(modals)/Map"
+        options={{
+          title: "Map",
           presentation:"modal"
         }}
       />

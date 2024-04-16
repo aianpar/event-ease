@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Pressable,
 } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
@@ -24,6 +25,8 @@ const gradient = require("../../../assets/bg-image/gradient.png");
 function handleBack() {
   router.back();
 }
+
+const fromCard = 1;
 export default function Event() {
   const [mapRegion, setmapRegion] = useState({
     latitude: 37.78825,
@@ -156,7 +159,7 @@ export default function Event() {
       </View>
       <View style={styles.main}>
         <View style={styles.action__row}>
-          <ButtonCard isAdded={eventCard.isAdded} byUser={eventCard.byUser} id={id}></ButtonCard>
+          <ButtonCard isAdded={eventCard.isAdded} byUser={eventCard.byUser} fromCard={fromCard} id={id}></ButtonCard>
 
           <TouchableOpacity>
             <EvilIcons name="share-google" size={34} color="#CFCFCF" />

@@ -17,6 +17,7 @@ import ButtonRedirect from "../../components/ButtonRedirect";
 import { useFocusEffect, router } from "expo-router";
 import { useCallback } from "react";
 import ButtonCard from "../../components/ButtonCard";
+import MapButton from "../../components/MapButton"
 
 const { width } = Dimensions.get("window");
 
@@ -150,6 +151,7 @@ export default function DiscoverPage() {
             );
           })}
       </ScrollView>
+      <MapButton></MapButton>
       <ButtonRedirect></ButtonRedirect>
     </View>
   );
