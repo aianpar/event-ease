@@ -40,7 +40,7 @@ export default function EventCard({ event_name, address, permission, date , id ,
       <View style={styles.cardWrapper}>
         <View style={styles.cardHeader}>
           <View style={styles.cardHeader__user}>
-            <Image source={{uri:`http://localhost:8080/userImg/${avatar}`}} style={styles.cardHeader__image}></Image>
+            <Image source={{uri:`https://event-ease-api-a8bf3c36c9cb.herokuapp.com/userImg/${avatar}`}} style={styles.cardHeader__image}></Image>
             <View style={styles.cardHeader__textWrap}>
               <Text style={styles.cardHeader__subhead}>Created by</Text>
               <Text style={styles.cardHeader__header}>{name}</Text>
@@ -64,7 +64,7 @@ export default function EventCard({ event_name, address, permission, date , id ,
           </View>
         </View>
       </View>
-      <Image style={styles.cardPreview} source={{uri:`http://localhost:8080/eventImg/${path}`}}/>
+      <Image style={styles.cardPreview} source={{uri:`https://event-ease-api-a8bf3c36c9cb.herokuapp.com/eventImg/${path}`}}/>
     </Pressable>
   );
 }

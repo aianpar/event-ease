@@ -39,7 +39,7 @@ export default function Event() {
   const { id } = useLocalSearchParams();
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/events/${id}`).then((r) => {
+    axios.get(`https://event-ease-api-a8bf3c36c9cb.herokuapp.com/events/${id}`).then((r) => {
       const data = r.data;
       setEventCard(data);
       console.log(data)
@@ -129,7 +129,7 @@ export default function Event() {
         <Image
           style={styles.header__image}
           source={{
-            uri: `http://localhost:8080/eventImg/${eventCard.eventimage_path}`,
+            uri: `https://event-ease-api-a8bf3c36c9cb.herokuapp.com/eventImg/${eventCard.eventimage_path}`,
           }}
         />
         <Image style={styles.header__imageGrad} source={gradient} />
@@ -148,7 +148,7 @@ export default function Event() {
           <View style={styles.header__hostWrap}>
             <Image
               source={{
-                uri: `http://localhost:8080/userImg/${eventCard.avatar}`,
+                uri: `https://event-ease-api-a8bf3c36c9cb.herokuapp.com/userImg/${eventCard.avatar}`,
               }}
               style={styles.header__hostImg}
             />
@@ -209,7 +209,7 @@ export default function Event() {
           <Image
             style={styles.hostPage__avatar}
             source={{
-              uri: `http://localhost:8080/userImg/${eventCard.avatar}`,
+              uri: `https://event-ease-api-a8bf3c36c9cb.herokuapp.com/userImg/${eventCard.avatar}`,
             }}
           ></Image>
           <View style={styles.hostPage__textWrap}>

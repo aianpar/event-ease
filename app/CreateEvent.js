@@ -86,7 +86,7 @@ export default function CreateEvent() {
     const dateObj = new Date(date);
     const endDateObj = new Date(endDate);
     try {
-      const response = await axios.post("http://localhost:8080/events", {
+      const response = await axios.post("https://event-ease-api-a8bf3c36c9cb.herokuapp.com/events", {
         event_name: eventName,
         description: description,
         timestamp_start: Math.floor(dateObj.getTime() / 1000),

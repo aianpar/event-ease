@@ -7,7 +7,7 @@ export default function ProfilePage() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    axios.get("http://localhost:8080").then((r) => {
+    axios.get("https://event-ease-api-a8bf3c36c9cb.herokuapp.com/").then((r) => {
       const data = r.data;
       setUser(data);
     });

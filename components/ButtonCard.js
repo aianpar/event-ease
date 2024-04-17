@@ -11,7 +11,7 @@ export default function ButtonCard({ isAdded, byUser , id ,fromCard}) {
 
 const handleJoinButton = async (id)=>{
   try{
-    const response = await axios.put(`http://localhost:8080/events/${id}`,{
+    const response = await axios.put(`https://event-ease-api-a8bf3c36c9cb.herokuapp.com/events/${id}`,{
       isAdded: true,
     });
     router.navigate(`/`);

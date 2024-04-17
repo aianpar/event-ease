@@ -10,7 +10,7 @@ export default function Page() {
   const [eventCard, setEventCard] = useState([]);
   useFocusEffect(
     useCallback(() => {
-      axios.get("http://localhost:8080/events").then((r) => {
+      axios.get("https://event-ease-api-a8bf3c36c9cb.herokuapp.com/events").then((r) => {
         const data = r.data;
         setEventCard(data);
       });

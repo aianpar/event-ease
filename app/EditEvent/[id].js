@@ -58,7 +58,7 @@ export default function EditEvent() {
 
   const handleDelete = async(id) =>{
     try {
-      const response = await axios.delete(`http://localhost:8080/events/${id}`)
+      const response = await axios.delete(`https://event-ease-api-a8bf3c36c9cb.herokuapp.com/events/${id}`)
       router.navigate(`/`);
     } catch(err) {
       router.navigate(`/`);
@@ -67,7 +67,7 @@ export default function EditEvent() {
 
   useFocusEffect(
     useCallback(() => {
-      axios.get(`http://localhost:8080/events/${id}`).then((r) => {
+      axios.get(`https://event-ease-api-a8bf3c36c9cb.herokuapp.com/events/${id}`).then((r) => {
         const data = r.data;
         console.log(data);
         setData(data);
@@ -129,7 +129,7 @@ export default function EditEvent() {
     const dateObj = new Date(date);
     const endDateObj = new Date(endDate);
     try {
-      const response = await axios.put(`http://localhost:8080/events/${id}`, {
+      const response = await axios.put(`https://event-ease-api-a8bf3c36c9cb.herokuapp.com/events/${id}`, {
         event_name: eventName,
         description: description,
         timestamp_start: Math.floor(dateObj.getTime() / 1000),

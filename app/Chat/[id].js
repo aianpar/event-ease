@@ -14,7 +14,7 @@ export default function Chat() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/events/${id}`).then((r) => {
+    axios.get(`https://event-ease-api-a8bf3c36c9cb.herokuapp.com/events/${id}`).then((r) => {
       const response = r.data;
       setData(response);
       console.log(response);
@@ -81,7 +81,7 @@ export default function Chat() {
             <Image
               style={styles.userImg}
               source={{
-                uri: `http://localhost:8080/userImg/${data.avatar}`,
+                uri: `https://event-ease-api-a8bf3c36c9cb.herokuapp.com/userImg/${data.avatar}`,
               }}
             />
           );
