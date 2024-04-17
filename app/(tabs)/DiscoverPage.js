@@ -27,7 +27,7 @@ const categories = [
     uri: require("../../assets/icons/category/today.png"),
   },
   {
-    name: "Tommorow",
+    name: "Tomorrow",
     uri: require("../../assets/icons/category/tommorow.png"),
   },
   {
@@ -54,7 +54,6 @@ export default function DiscoverPage() {
         const data = r.data;
         setEventCard(data);
         setAllEvents(data)
-        console.log(data)
       });
     }, [])
   );
@@ -72,8 +71,8 @@ export default function DiscoverPage() {
         filteredEvents = allEvents.filter(e => e.isToday === 1)
 
       }
-      else if (item === "Tommorow"){
-        filteredEvents = allEvents.filter(e => e.isTommorow === 1)
+      else if (item === "Tomorrow"){
+        filteredEvents = allEvents.filter(e => e.isTomorrow === 1)
       }
       else if  (item === "This week"){
         filteredEvents = allEvents.filter(e => e.isThisWeek === 1)

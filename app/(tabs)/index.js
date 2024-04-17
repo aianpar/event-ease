@@ -53,8 +53,7 @@ export default function Page() {
               );
             })}
             </View>
-          <Link href={"(modals)/Filter"}>Filter</Link>
-          <Link href={"/events/12"}>Link</Link>
+
         </View>
       </ScrollView>
       <ButtonRedirect></ButtonRedirect>

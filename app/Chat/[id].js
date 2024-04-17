@@ -62,8 +62,8 @@ export default function Chat() {
         options={{
           header: () => {
             return (
-              <Link href={"/"} style={{ paddingTop: 50, backgroundColor: "#151515" }}>
-               <Ionicons name="chevron-back" size={50} color="white" />
+              <Link href={"/"} style={{ paddingLeft:12, paddingTop: 60, backgroundColor: "#151515" }}>
+               <Ionicons name="chevron-back" size={30} color="white" />
               </Link>
             );
           },
